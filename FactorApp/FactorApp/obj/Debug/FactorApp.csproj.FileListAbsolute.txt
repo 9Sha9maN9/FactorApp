@@ -1,0 +1,11 @@
+D:\Work\Factor\FactorApp\FactorApp\bin\Debug\ICO\ACTIVITL.ICO
+D:\Work\Factor\FactorApp\FactorApp\bin\Debug\FactorApp.exe
+D:\Work\Factor\FactorApp\FactorApp\bin\Debug\FactorApp.pdb
+D:\Work\Factor\FactorApp\FactorApp\obj\Debug\FactorApp.csprojResolveAssemblyReference.cache
+D:\Work\Factor\FactorApp\FactorApp\obj\Debug\FactorApp.frmAuthorization.resources
+D:\Work\Factor\FactorApp\FactorApp\obj\Debug\FactorApp.Properties.Resources.resources
+D:\Work\Factor\FactorApp\FactorApp\obj\Debug\FactorApp.csproj.GenerateResource.Cache
+D:\Work\Factor\FactorApp\FactorApp\obj\Debug\FactorApp.exe
+D:\Work\Factor\FactorApp\FactorApp\obj\Debug\FactorApp.pdb
+D:\Work\Factor\FactorApp\FactorApp\obj\Debug\FactorApp.Form2.resources
+D:\Work\Factor\FactorApp\FactorApp\obj\Debug\FactorApp.FormAdm.resources
