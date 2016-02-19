@@ -9,19 +9,29 @@ namespace FactorApp.XML
     {
         private string logIn;
         public string LogIN { get { return logIn;} }
-        private RightsType right;
-        public RightsType Right { get { return right; } }
+        private string password;
+        public string Password { get { return password; } }
+        private RightsType rights;
+        public RightsType Rights { get { return rights; } }
 
         public User()
         {
             logIn = "None";
-            right = RightsType.Watch;
+            rights = RightsType.Watch;
         }
 
-        public User(string inpLogIn, RightsType inpRight)
+        public User(string inpLogIn, RightsType inpRights)
         {
             logIn = inpLogIn;
-            right = inpRight;
+            rights = inpRights;
+            password = "***";
+        }
+
+        public User(string inpLogIn, string inpPassword, RightsType inpRights)
+        {
+            logIn = inpLogIn;
+            password = inpPassword;
+            rights = inpRights;
         }
     }
 }

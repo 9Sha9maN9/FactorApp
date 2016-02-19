@@ -102,6 +102,10 @@
     <Content Include="ICO\ACTIVITL.ICO">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="ICO\add-user-icon.png" />
+    <Content Include="ICO\edit-user-icon.png" />
+    <Content Include="ICO\KEY04.ICO" />
+    <Content Include="ICO\remove-user-icon.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

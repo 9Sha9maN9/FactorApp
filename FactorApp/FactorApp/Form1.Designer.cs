@@ -30,10 +30,10 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmAuthorization));
             this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.txtLogIn = new System.Windows.Forms.TextBox();
-            this.txtPassword = new System.Windows.Forms.TextBox();
-            this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
+            this.label1 = new System.Windows.Forms.Label();
+            this.txtPassword = new System.Windows.Forms.TextBox();
+            this.txtLogIn = new System.Windows.Forms.TextBox();
             this.btnLogIn = new System.Windows.Forms.Button();
             this.btnExit = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
@@ -52,22 +52,14 @@
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Данные для авторизации";
             // 
-            // txtLogIn
+            // label2
             // 
-            this.txtLogIn.Location = new System.Drawing.Point(126, 31);
-            this.txtLogIn.Name = "txtLogIn";
-            this.txtLogIn.Size = new System.Drawing.Size(159, 20);
-            this.txtLogIn.TabIndex = 0;
-            this.txtLogIn.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.frmAuthorization_KeyPress);
-            // 
-            // txtPassword
-            // 
-            this.txtPassword.Location = new System.Drawing.Point(126, 69);
-            this.txtPassword.Name = "txtPassword";
-            this.txtPassword.PasswordChar = '*';
-            this.txtPassword.Size = new System.Drawing.Size(159, 20);
-            this.txtPassword.TabIndex = 1;
-            this.txtPassword.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.frmAuthorization_KeyPress);
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(6, 76);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(45, 13);
+            this.label2.TabIndex = 3;
+            this.label2.Text = "Пароль";
             // 
             // label1
             // 
@@ -78,14 +70,22 @@
             this.label1.TabIndex = 2;
             this.label1.Text = "Логин";
             // 
-            // label2
+            // txtPassword
             // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(6, 76);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(45, 13);
-            this.label2.TabIndex = 3;
-            this.label2.Text = "Пароль";
+            this.txtPassword.Location = new System.Drawing.Point(126, 69);
+            this.txtPassword.Name = "txtPassword";
+            this.txtPassword.PasswordChar = '*';
+            this.txtPassword.Size = new System.Drawing.Size(159, 20);
+            this.txtPassword.TabIndex = 1;
+            this.txtPassword.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.frmAuthorization_KeyPress);
+            // 
+            // txtLogIn
+            // 
+            this.txtLogIn.Location = new System.Drawing.Point(126, 31);
+            this.txtLogIn.Name = "txtLogIn";
+            this.txtLogIn.Size = new System.Drawing.Size(159, 20);
+            this.txtLogIn.TabIndex = 0;
+            this.txtLogIn.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.frmAuthorization_KeyPress);
             // 
             // btnLogIn
             // 

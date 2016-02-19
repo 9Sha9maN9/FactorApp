@@ -28,13 +28,14 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form2));
             this.maiMenu = new System.Windows.Forms.MenuStrip();
             this.mnuEdit = new System.Windows.Forms.ToolStripMenuItem();
-            this.mnuAdmin = new System.Windows.Forms.ToolStripMenuItem();
-            this.mnuService = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuNew = new System.Windows.Forms.ToolStripMenuItem();
-            this.mnuExit = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
+            this.mnuExit = new System.Windows.Forms.ToolStripMenuItem();
+            this.mnuService = new System.Windows.Forms.ToolStripMenuItem();
+            this.mnuAdmin = new System.Windows.Forms.ToolStripMenuItem();
             this.maiMenu.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -60,6 +61,29 @@
             this.mnuEdit.Size = new System.Drawing.Size(48, 20);
             this.mnuEdit.Text = "Файл";
             // 
+            // mnuNew
+            // 
+            this.mnuNew.Name = "mnuNew";
+            this.mnuNew.Size = new System.Drawing.Size(149, 22);
+            this.mnuNew.Text = "Новый месяц";
+            // 
+            // toolStripSeparator1
+            // 
+            this.toolStripSeparator1.Name = "toolStripSeparator1";
+            this.toolStripSeparator1.Size = new System.Drawing.Size(146, 6);
+            // 
+            // mnuExit
+            // 
+            this.mnuExit.Name = "mnuExit";
+            this.mnuExit.Size = new System.Drawing.Size(149, 22);
+            this.mnuExit.Text = "Выход";
+            // 
+            // mnuService
+            // 
+            this.mnuService.Name = "mnuService";
+            this.mnuService.Size = new System.Drawing.Size(59, 20);
+            this.mnuService.Text = "Сервис";
+            // 
             // mnuAdmin
             // 
             this.mnuAdmin.Name = "mnuAdmin";
@@ -68,35 +92,13 @@
             this.mnuAdmin.Visible = false;
             this.mnuAdmin.Click += new System.EventHandler(this.mnuAdmin_Click);
             // 
-            // mnuService
-            // 
-            this.mnuService.Name = "mnuService";
-            this.mnuService.Size = new System.Drawing.Size(59, 20);
-            this.mnuService.Text = "Сервис";
-            // 
-            // mnuNew
-            // 
-            this.mnuNew.Name = "mnuNew";
-            this.mnuNew.Size = new System.Drawing.Size(149, 22);
-            this.mnuNew.Text = "Новый месяц";
-            // 
-            // mnuExit
-            // 
-            this.mnuExit.Name = "mnuExit";
-            this.mnuExit.Size = new System.Drawing.Size(149, 22);
-            this.mnuExit.Text = "Выход";
-            // 
-            // toolStripSeparator1
-            // 
-            this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(146, 6);
-            // 
             // Form2
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(550, 326);
             this.Controls.Add(this.maiMenu);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MainMenuStrip = this.maiMenu;
             this.Name = "Form2";
             this.Text = "Form2";
