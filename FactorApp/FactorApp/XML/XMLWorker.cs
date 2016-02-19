@@ -75,7 +75,8 @@ namespace FactorApp.XML
         {
             document = new XDocument();
             List<XAttribute> attr = new List<XAttribute>();
-            RightsType defaultRight = RightsType.Administration;
+            //RightsType defaultRight = RightsType.Administration;
+            RightsType defaultRight = RightsType.Watch;
             string defaultLogIn = "Administrator";
             string defaultPassword = "Adm";
             document.Add(new XElement("UsersBase"));
@@ -143,6 +144,20 @@ namespace FactorApp.XML
 
         }
 
+        public User GetUserByLogin(string logIn)
+        {
+            if (IsValidLogIn(logIn))
+            {
+                foreach (XElement el in user)
+                {
+                    return new User((string)cryptoWorker.AesDataDecrypt(encoder.GetBytes(el.Attribute("LogIN").Value)),
+                    (RightsType)Enum.Parse(typeof(RightsType),
+                    (string)cryptoWorker.AesDataDecrypt(encoder.GetBytes(el.Attribute("Rights").Value))));
+                }
+            }
+            return new User();
+        }
+
         public List<User> GetAllUsers()
         {
             List<User> result = new List<User>();
@@ -151,7 +166,9 @@ namespace FactorApp.XML
                 select el;
             foreach (XElement el in user)
             {
-                result.Add(new User((string)cryptoWorker.AesDataDecrypt(encoder.GetBytes(el.Attribute("LogIN").Value)),(RightsType)Enum.Parse(typeof(RightsType),(string)cryptoWorker.AesDataDecrypt(encoder.GetBytes(el.Attribute("Rights").Value)))));
+                result.Add(new User((string)cryptoWorker.AesDataDecrypt(encoder.GetBytes(el.Attribute("LogIN").Value)),
+                    (RightsType)Enum.Parse(typeof(RightsType),
+                    (string)cryptoWorker.AesDataDecrypt(encoder.GetBytes(el.Attribute("Rights").Value)))));
             }
             return result;
         }

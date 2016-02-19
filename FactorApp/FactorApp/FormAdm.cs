@@ -15,12 +15,17 @@ namespace FactorApp
     {
         private UsersBaseClass xWorker;
         private DataTable userBase;
+        private string prewiousLogIn;
+        private DataRow currentRow;
         public FormAdm()
         {
             InitializeComponent();
             xWorker = new UsersBaseClass("D:\\new.xml");
+            prewiousLogIn = "None";
             FillUserBase();
             usersGrid.DataSource = userBase;
+            usersGrid.Location = new Point(12, 28);
+            cboRights.DataSource = Enum.GetValues(typeof(RightsType));
         }
 
         private void FillUserBase()
@@ -32,6 +37,13 @@ namespace FactorApp
             {
                 userBase.Rows.Add(usr.LogIN, EnumConverter.EnumToString<RightsType>(usr.Rights));
             }
+            currentRow = userBase.Rows[0];
+            userBase.RowChanged += userBase_RowChanged;
+        }
+
+        void userBase_RowChanged(object sender, DataRowChangeEventArgs e)
+        {
+            currentRow = e.Row;
         }
 
         private void toolStripButton_Click(object sender, EventArgs e)
@@ -40,11 +52,24 @@ namespace FactorApp
             {
                 case "Add":
                     {
+                        admGroupBox.Visible = true;
                         usersGrid.Visible = false;
                     } break;
                 case "Edit":
                     {
-                        usersGrid.Visible = false;
+                        User tmp = xWorker.GetUserByLogin(currentRow[0].ToString());
+                        if (tmp.LogIN != "None")
+                        {
+                            prewiousLogIn = tmp.LogIN;
+                            txtLogin.Text = tmp.LogIN;
+                            txtPassword.Text = tmp.Password;
+                            admGroupBox.Visible = true;
+                            usersGrid.Visible = false;
+                        }
+                        else
+                        {
+                            MessageBox.Show("empty");
+                        }
                     } break;
                 case "Delete":
                     {
@@ -61,6 +86,21 @@ namespace FactorApp
         {
 
         }
+
+        private void buttonCancel_Click(object sender, EventArgs e)
+        {
+            txtLogin.Text = string.Empty;
+            txtPassword.Text = string.Empty;
+            admGroupBox.Visible = false;
+            usersGrid.Visible = true;
+        }
+
+        private void buttonApply_Click(object sender, EventArgs e)
+        {
+            xWorker.Add(txtLogin.Text, txtPassword.Text, RightsType.Administration);
+            buttonCancel.PerformClick();
+        }
+
 
     }
 }
