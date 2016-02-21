@@ -9,3 +9,14 @@ D:\Work\Factor\FactorApp\FactorApp\obj\Debug\FactorApp.exe
 D:\Work\Factor\FactorApp\FactorApp\obj\Debug\FactorApp.pdb
 D:\Work\Factor\FactorApp\FactorApp\obj\Debug\FactorApp.Form2.resources
 D:\Work\Factor\FactorApp\FactorApp\obj\Debug\FactorApp.FormAdm.resources
+D:\Programing\FactorApp\FactorApp\FactorApp\obj\Debug\FactorApp.exe
+D:\Programing\FactorApp\FactorApp\FactorApp\obj\Debug\FactorApp.pdb
+D:\Programing\FactorApp\FactorApp\FactorApp\bin\Debug\ICO\ACTIVITL.ICO
+D:\Programing\FactorApp\FactorApp\FactorApp\bin\Debug\FactorApp.exe
+D:\Programing\FactorApp\FactorApp\FactorApp\bin\Debug\FactorApp.pdb
+D:\Programing\FactorApp\FactorApp\FactorApp\obj\Debug\FactorApp.csprojResolveAssemblyReference.cache
+D:\Programing\FactorApp\FactorApp\FactorApp\obj\Debug\FactorApp.frmAuthorization.resources
+D:\Programing\FactorApp\FactorApp\FactorApp\obj\Debug\FactorApp.Form2.resources
+D:\Programing\FactorApp\FactorApp\FactorApp\obj\Debug\FactorApp.FormAdm.resources
+D:\Programing\FactorApp\FactorApp\FactorApp\obj\Debug\FactorApp.Properties.Resources.resources
+D:\Programing\FactorApp\FactorApp\FactorApp\obj\Debug\FactorApp.csproj.GenerateResource.Cache

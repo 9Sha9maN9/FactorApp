@@ -18,6 +18,14 @@ namespace FactorApp
         {
             InitializeComponent();
             authorizeWorker = new Authorization("D:\\new.xml");
+            authorizeWorker.onDecryptError += authorizeWorker_onDecryptError;
+        }
+
+        private void authorizeWorker_onDecryptError()
+        {
+            MessageBox.Show("Для введенного логина повреждена запись в базе данных!\nОбратитесь к администратору!",
+                "Ошибка Базы Данных", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            this.Close();
         }
 
         private void frmAuthorization_KeyPress(object sender, KeyPressEventArgs e)

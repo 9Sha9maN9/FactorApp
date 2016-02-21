@@ -17,7 +17,7 @@ namespace FactorApp.XML
         protected string filePath;
         protected XDocument document;
         protected DataCrypto cryptoWorker;
-        protected UnicodeEncoding encoder;
+        public DataCrypto CryptoWorker { get { return cryptoWorker; } }
         public XDocument Document { get { return document; } }
 
         public XMLWorker(XDocument xdoc)
@@ -25,14 +25,12 @@ namespace FactorApp.XML
             document = xdoc;
             filePath = "C:\tmp.xml";
             cryptoWorker = new DataCrypto();
-            encoder = new UnicodeEncoding();
         }
 
         public XMLWorker(string xmlFile)
         {
             filePath = xmlFile;
             cryptoWorker = new DataCrypto();
-            encoder = new UnicodeEncoding();
             if(!File.Exists(xmlFile))
             {
                 CreateNewDocument(xmlFile);
@@ -75,17 +73,11 @@ namespace FactorApp.XML
         {
             document = new XDocument();
             List<XAttribute> attr = new List<XAttribute>();
-            //RightsType defaultRight = RightsType.Administration;
-            RightsType defaultRight = RightsType.Watch;
+            RightsType defaultRight = RightsType.Administration;
             string defaultLogIn = "Administrator";
             string defaultPassword = "Adm";
             document.Add(new XElement("UsersBase"));
             Add(defaultLogIn, defaultPassword, defaultRight);
-        }
-        
-        private string ByteArrayToString(byte[] array)
-        {
-            return encoder.GetString(array);
         }
 
         public bool IsValidLogIn(string logIn)
@@ -112,9 +104,9 @@ namespace FactorApp.XML
             {
                 foreach (XElement elm in user)
                 {
-                    if (elm.Attribute("Password").Value == encoder.GetString(cryptoWorker.HashPasswordEncrypt(password)))
+                    if (elm.Attribute("Password").Value == new UnicodeEncoding().GetString(cryptoWorker.HashPasswordEncrypt(password)))
                     {
-                        rights =(RightsType)Enum.Parse(typeof(RightsType),(string)cryptoWorker.AesDataDecrypt(encoder.GetBytes(elm.Attribute("Rights").Value)));
+                        rights =(RightsType)Enum.Parse(typeof(RightsType),(string)cryptoWorker.AesDataDecrypt(DataCrypto.GetBytes(elm.Attribute("Rights").Value)));
                         result = true;
                     }
                    
@@ -126,16 +118,16 @@ namespace FactorApp.XML
         public void Add(string logIn, string password, RightsType rights)
         {
             List<XAttribute> attr = new List<XAttribute>();
-            attr.Add(new XAttribute("LogIN", encoder.GetString(cryptoWorker.AesDataEncrypt(logIn))));
-            attr.Add(new XAttribute("Password", encoder.GetString(cryptoWorker.HashPasswordEncrypt(password))));
-            attr.Add(new XAttribute("Rights", encoder.GetString(cryptoWorker.AesDataEncrypt(rights))));
+            attr.Add(new XAttribute("LogIN", DataCrypto.GetString(cryptoWorker.AesDataEncrypt(logIn))));
+            attr.Add(new XAttribute("Password", new UnicodeEncoding().GetString(cryptoWorker.HashPasswordEncrypt(password))));
+            attr.Add(new XAttribute("Rights", DataCrypto.GetString(cryptoWorker.AesDataEncrypt(rights))));
             document.Root.Add(new XElement("User", attr));
             document.Save(filePath);
         }
 
         public void Delete(string logIn)
         {
-            document.Root.Elements().First(x => (string)cryptoWorker.AesDataDecrypt(encoder.GetBytes(x.Attribute("LogIN").Value)) == logIn).Remove();
+            document.Root.Elements().First(x => (string)cryptoWorker.AesDataDecrypt(DataCrypto.GetBytes(x.Attribute("LogIN").Value)) == logIn).Remove();
             document.Save(filePath);
         }
 
@@ -150,9 +142,9 @@ namespace FactorApp.XML
             {
                 foreach (XElement el in user)
                 {
-                    return new User((string)cryptoWorker.AesDataDecrypt(encoder.GetBytes(el.Attribute("LogIN").Value)),
+                    return new User((string)cryptoWorker.AesDataDecrypt(DataCrypto.GetBytes(el.Attribute("LogIN").Value)),
                     (RightsType)Enum.Parse(typeof(RightsType),
-                    (string)cryptoWorker.AesDataDecrypt(encoder.GetBytes(el.Attribute("Rights").Value))));
+                    (string)cryptoWorker.AesDataDecrypt(DataCrypto.GetBytes(el.Attribute("Rights").Value))));
                 }
             }
             return new User();
@@ -166,9 +158,9 @@ namespace FactorApp.XML
                 select el;
             foreach (XElement el in user)
             {
-                result.Add(new User((string)cryptoWorker.AesDataDecrypt(encoder.GetBytes(el.Attribute("LogIN").Value)),
+                result.Add(new User((string)cryptoWorker.AesDataDecrypt(DataCrypto.GetBytes(el.Attribute("LogIN").Value)),
                     (RightsType)Enum.Parse(typeof(RightsType),
-                    (string)cryptoWorker.AesDataDecrypt(encoder.GetBytes(el.Attribute("Rights").Value)))));
+                    (string)cryptoWorker.AesDataDecrypt(DataCrypto.GetBytes(el.Attribute("Rights").Value)))));
             }
             return result;
         }

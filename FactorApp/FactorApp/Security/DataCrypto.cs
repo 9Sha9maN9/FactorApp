@@ -9,13 +9,15 @@ namespace FactorApp.Security
     {
         private HashAlgorithm hashAlgm;
         private AesCryptoServiceProvider aesAlgm;
+        public delegate void CannotDecrypt(Exception ex);
+        public event CannotDecrypt onCannotDecrypt;
 
         public DataCrypto()
         {
             hashAlgm = HashAlgorithm.Create();
             aesAlgm = new AesCryptoServiceProvider();
-            aesAlgm.Key = (new UnicodeEncoding()).GetBytes("fghW[%+d");
-            aesAlgm.IV = (new UnicodeEncoding()).GetBytes("o%df(c䣝$");
+            aesAlgm.Key = (new UnicodeEncoding()).GetBytes("VLadisla");
+            aesAlgm.IV = (new UnicodeEncoding()).GetBytes("ALsidalv");
             aesAlgm.Mode = CipherMode.CBC;
             aesAlgm.Padding = PaddingMode.PKCS7;
         }
@@ -53,11 +55,36 @@ namespace FactorApp.Security
                 {
                     using (StreamReader srDecrypt = new StreamReader(csDecrypt))
                     {
-                        result = (object)srDecrypt.ReadToEnd();
+                        try
+                        {
+                            result = (object)srDecrypt.ReadToEnd();
+                        }
+                        catch(Exception ex)
+                        {
+                            onCannotDecrypt(ex);
+                            result = false;
+                        }
                     }
                 }
             }
             return result;
         }
+
+        public static byte[] GetBytes(string str)
+        {
+            byte[] bytes = new byte[str.Length * sizeof(char)];
+            System.Buffer.BlockCopy(str.ToCharArray(), 0, bytes, 0, bytes.Length);
+            return bytes;
+        }
+
+        public static string GetString(byte[] bytes)
+        {
+            char[] chars = new char[bytes.Length / sizeof(char)];
+            System.Buffer.BlockCopy(bytes, 0, chars, 0, bytes.Length);
+            string result = new string(chars);
+            return result;
+        }
+
+
     }
 }

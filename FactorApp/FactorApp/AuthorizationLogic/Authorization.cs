@@ -3,7 +3,6 @@ using System.IO;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Security.Cryptography;
 using FactorApp.XML;
 
 namespace FactorApp.AuthorizationLogic
@@ -15,11 +14,20 @@ namespace FactorApp.AuthorizationLogic
         private int attempts;
         public int Attepmpts { get{return attempts;}}
         public RightsType UserRights { get { return xWorker.Rights; } }
+        public delegate void DecrytpError();
+        public event DecrytpError onDecryptError; 
 
         public Authorization(string path)
         {
             attempts = 0;
             xWorker = new UsersBaseClass(path);
+            xWorker.CryptoWorker.onCannotDecrypt += CryptoWorker_onCannotDecrypt;
+        }
+
+        private void CryptoWorker_onCannotDecrypt(Exception ex)
+        {
+            ex.Data.Clear();
+            onDecryptError();   
         }
 
         public LogInErrorType CheckPassword(string logIn, string password)

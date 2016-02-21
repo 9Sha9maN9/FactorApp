@@ -21,11 +21,18 @@ namespace FactorApp
         {
             InitializeComponent();
             xWorker = new UsersBaseClass("D:\\new.xml");
+            xWorker.CryptoWorker.onCannotDecrypt += CryptoWorker_onCannotDecrypt;
             prewiousLogIn = "None";
             FillUserBase();
             usersGrid.DataSource = userBase;
             usersGrid.Location = new Point(12, 28);
             cboRights.DataSource = Enum.GetValues(typeof(RightsType));
+        }
+
+        private void CryptoWorker_onCannotDecrypt(Exception ex)
+        {
+            ex.Data.Clear();
+            MessageBox.Show("Err");
         }
 
         private void FillUserBase()
@@ -97,7 +104,8 @@ namespace FactorApp
 
         private void buttonApply_Click(object sender, EventArgs e)
         {
-            xWorker.Add(txtLogin.Text, txtPassword.Text, RightsType.Administration);
+            xWorker.Add(txtLogin.Text, txtPassword.Text, (RightsType)cboRights.SelectedValue);
+            userBase.Rows.Add(txtLogin.Text, EnumConverter.EnumToString<RightsType>((RightsType)cboRights.SelectedValue));
             buttonCancel.PerformClick();
         }
 
