@@ -60,6 +60,59 @@ namespace FactorApp
             usersGrid.Location = new Point(12, 28);
         }
 
+        private void DeleteUser()
+        {
+            xWorker.Delete(int.Parse(usersGrid.CurrentRow.Cells[0].Value.ToString()));
+        }
+
+        private void AddNewUser()
+        {
+            int id;
+            if (!xWorker.IsValidLogIn(txtLogin.Text))
+            {
+                id = xWorker.GetLastId();
+                xWorker.Add(txtLogin.Text, txtPassword.Text, (RightsType)cboRights.SelectedValue);
+                userBase.Rows.Add(id, txtLogin.Text, EnumConverter.EnumToString<RightsType>((RightsType)cboRights.SelectedValue),
+                    "***", (RightsType)cboRights.SelectedValue);
+                buttonCancel.PerformClick();
+            }
+            else
+            {
+                MessageBox.Show("Такой логин уже имеется!", "Внимание", MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
+            }
+        }
+
+        private void EditUser(bool isPasswordChanged)
+        {
+            int id = int.Parse(usersGrid.CurrentRow.Cells[0].Value.ToString());
+            if ((prevoiusLogin == txtLogin.Text) || (!xWorker.IsValidLogIn(txtLogin.Text)))
+            {
+                if (isPasswordChanged)
+                {
+                    xWorker.Edit(id, txtLogin.Text, txtPassword.Text, (RightsType)cboRights.SelectedValue);
+                }
+                else
+                {
+                    xWorker.Edit(id, txtLogin.Text, (RightsType)cboRights.SelectedValue);
+                }
+            }
+            else
+            {
+                MessageBox.Show("Такой логин уже имеется!", "Внимание", MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
+                return;
+            }
+            DataRow[] tmp = userBase.Select("Ид=" + id.ToString());
+            tmp[0]["Логин"] = txtLogin.Text;
+            tmp[0]["Права доступа"] = EnumConverter.EnumToString<RightsType>((RightsType)cboRights.SelectedValue);
+            tmp[0]["Password"] = "***";
+            tmp[0]["Rights"] = cboRights.SelectedValue;
+            buttonCancel.PerformClick();
+        }
+
+        private bool IsEmptyField()
+        {
+            return false;
+        }
 
         private void toolStripButton_Click(object sender, EventArgs e)
         {
@@ -68,6 +121,8 @@ namespace FactorApp
                 case "Add":
                     {
                         isNew = true;
+                        txtPassword.Enabled = true;
+                        checkBoxPswChange.Visible = false;
                         admGroupBox.Visible = true;
                         usersGrid.Visible = false;
                     } break;
@@ -92,15 +147,12 @@ namespace FactorApp
             }
         }
 
-        private void DeleteUser()
-        {
-
-        }
-
         private void buttonCancel_Click(object sender, EventArgs e)
         {
             txtLogin.Text = string.Empty;
             txtPassword.Text = string.Empty;
+            txtPassword.Enabled = false;
+            checkBoxPswChange.Visible = true;
             admGroupBox.Visible = false;
             usersGrid.Visible = true;
         }
@@ -109,56 +161,18 @@ namespace FactorApp
         {
             if (isNew)
             {
-                AddNew();
+                AddNewUser();
             }
             else
             {
-                Edit();
+                EditUser(checkBoxPswChange.Checked);
             }
             
         }
 
-        private void AddNew()
+        private void checkBoxPswChange_CheckedChanged(object sender, EventArgs e)
         {
-            int id;
-            if (!xWorker.IsValidLogIn(txtLogin.Text))
-            {
-                id = xWorker.GetLastId();
-                xWorker.Add(txtLogin.Text, txtPassword.Text, (RightsType)cboRights.SelectedValue);
-                userBase.Rows.Add(id, txtLogin.Text, EnumConverter.EnumToString<RightsType>((RightsType)cboRights.SelectedValue));
-                buttonCancel.PerformClick();
-            }
-            else
-            {
-                MessageBox.Show("Такой логин уже имеется!", "Внимание", MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
-            }
-        }
-
-        private void Edit()
-        {
-            int id = int.Parse(usersGrid.CurrentRow.Cells[0].Value.ToString());
-            if (prevoiusLogin == txtLogin.Text)
-            {
-                xWorker.Edit(id, txtLogin.Text, txtPassword.Text, (RightsType)cboRights.SelectedValue);
-            }
-            else
-            {
-                if (!xWorker.IsValidLogIn(txtLogin.Text))
-                {
-                    xWorker.Edit(id, txtLogin.Text, txtPassword.Text, (RightsType)cboRights.SelectedValue);
-                }
-                else
-                {
-                    MessageBox.Show("Такой логин уже имеется!", "Внимание", MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
-                    return;
-                }
-            }
-            DataRow[] tmp = userBase.Select("Ид=" + id.ToString());
-            tmp[0]["Логин"] = txtLogin.Text;
-            tmp[0]["Права доступа"] = EnumConverter.EnumToString<RightsType>((RightsType)cboRights.SelectedValue);
-            tmp[0]["Password"] = "***";
-            tmp[0]["Rights"] = cboRights.SelectedValue;
-            buttonCancel.PerformClick();
+            txtPassword.Enabled = checkBoxPswChange.Checked;
         }
 
     }

@@ -131,6 +131,14 @@ namespace FactorApp.XML
             document.Save(filePath);
         }
 
+        public void Edit(int id, string logIn, RightsType rights)
+        {
+            XElement tmp = document.Root.Elements().First(x => int.Parse(x.Attribute("Id").Value) == id);
+            tmp.Attribute("LogIN").Value = DataCrypto.GetString(cryptoWorker.AesDataEncrypt(logIn));
+            tmp.Attribute("Rights").Value = DataCrypto.GetString(cryptoWorker.AesDataEncrypt(rights));
+            document.Save(filePath);
+        }
+
         public List<User> GetAllUsers()
         {
             List<User> result = new List<User>();

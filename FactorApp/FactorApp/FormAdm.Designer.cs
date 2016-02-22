@@ -43,6 +43,7 @@
             this.label3 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
+            this.checkBoxPswChange = new System.Windows.Forms.CheckBox();
             this.admToolStrip.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.usersGrid)).BeginInit();
             this.admGroupBox.SuspendLayout();
@@ -56,7 +57,7 @@
             this.toolStripButtonDelete});
             this.admToolStrip.Location = new System.Drawing.Point(0, 0);
             this.admToolStrip.Name = "admToolStrip";
-            this.admToolStrip.Size = new System.Drawing.Size(323, 25);
+            this.admToolStrip.Size = new System.Drawing.Size(395, 25);
             this.admToolStrip.TabIndex = 0;
             this.admToolStrip.Text = "toolStrip1";
             // 
@@ -105,6 +106,7 @@
             // 
             // admGroupBox
             // 
+            this.admGroupBox.Controls.Add(this.checkBoxPswChange);
             this.admGroupBox.Controls.Add(this.cboRights);
             this.admGroupBox.Controls.Add(this.txtPassword);
             this.admGroupBox.Controls.Add(this.txtLogin);
@@ -115,7 +117,7 @@
             this.admGroupBox.Controls.Add(this.label1);
             this.admGroupBox.Location = new System.Drawing.Point(12, 28);
             this.admGroupBox.Name = "admGroupBox";
-            this.admGroupBox.Size = new System.Drawing.Size(299, 171);
+            this.admGroupBox.Size = new System.Drawing.Size(371, 171);
             this.admGroupBox.TabIndex = 4;
             this.admGroupBox.TabStop = false;
             this.admGroupBox.Text = "Данные пользователя";
@@ -131,6 +133,7 @@
             // 
             // txtPassword
             // 
+            this.txtPassword.Enabled = false;
             this.txtPassword.Location = new System.Drawing.Point(125, 66);
             this.txtPassword.Name = "txtPassword";
             this.txtPassword.Size = new System.Drawing.Size(156, 20);
@@ -190,11 +193,22 @@
             this.label1.TabIndex = 8;
             this.label1.Text = "Логин";
             // 
+            // checkBoxPswChange
+            // 
+            this.checkBoxPswChange.AutoSize = true;
+            this.checkBoxPswChange.Location = new System.Drawing.Point(288, 68);
+            this.checkBoxPswChange.Name = "checkBoxPswChange";
+            this.checkBoxPswChange.Size = new System.Drawing.Size(77, 17);
+            this.checkBoxPswChange.TabIndex = 16;
+            this.checkBoxPswChange.Text = "Изменить";
+            this.checkBoxPswChange.UseVisualStyleBackColor = true;
+            this.checkBoxPswChange.CheckedChanged += new System.EventHandler(this.checkBoxPswChange_CheckedChanged);
+            // 
             // FormAdm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(323, 230);
+            this.ClientSize = new System.Drawing.Size(395, 230);
             this.Controls.Add(this.admGroupBox);
             this.Controls.Add(this.usersGrid);
             this.Controls.Add(this.admToolStrip);
@@ -230,5 +244,6 @@
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.CheckBox checkBoxPswChange;
     }
 }
