@@ -14,6 +14,30 @@ namespace FactorApp
         [Description("Отчет")] Report
     };
 
+    public class EnvelopRightsType
+    {
+        private RightsType right;
+        public RightsType Right {get {return right;}}
+        private string name;
+        public string Name{get {return name;}}
+
+        EnvelopRightsType(RightsType Rght)
+        {
+            right = Rght;
+            name = EnumConverter.EnumToString<RightsType>(Rght);
+        }
+
+        public static List<EnvelopRightsType> CreateListOfRightType(System.Array values)
+        {
+            List<EnvelopRightsType> result = new List<EnvelopRightsType>();
+            foreach (var value in values)
+            {
+                result.Add(new EnvelopRightsType((RightsType)value));
+            }
+            return result;
+        }
+    }
+
     public static class EnumConverter
     {
         public static string EnumToString<T>(this T enumerationValue)
@@ -41,5 +65,6 @@ namespace FactorApp
             //If we have no description attribute, just return the ToString of the enum
             return enumerationValue.ToString();
         }
+
     }
 }

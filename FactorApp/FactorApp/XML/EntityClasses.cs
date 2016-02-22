@@ -7,6 +7,8 @@ namespace FactorApp.XML
 {
     class User
     {
+        private int id;
+        public int ID { get { return id; } }
         private string logIn;
         public string LogIN { get { return logIn;} }
         private string password;
@@ -16,22 +18,27 @@ namespace FactorApp.XML
 
         public User()
         {
+            id = -1;
             logIn = "None";
+            password = "***";
             rights = RightsType.Watch;
         }
 
-        public User(string inpLogIn, RightsType inpRights)
+        public User(int inpId, string inpLogIn, string inpPassword, RightsType inpRights)
         {
+            id = inpId;
             logIn = inpLogIn;
             rights = inpRights;
-            password = "***";
+            if (string.IsNullOrEmpty(inpPassword))
+            {
+                password = string.Empty;
+            }
+            else
+            {
+                password = "***";
+            }
+
         }
 
-        public User(string inpLogIn, string inpPassword, RightsType inpRights)
-        {
-            logIn = inpLogIn;
-            password = inpPassword;
-            rights = inpRights;
-        }
     }
 }

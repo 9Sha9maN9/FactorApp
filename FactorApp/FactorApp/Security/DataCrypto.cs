@@ -16,8 +16,8 @@ namespace FactorApp.Security
         {
             hashAlgm = HashAlgorithm.Create();
             aesAlgm = new AesCryptoServiceProvider();
-            aesAlgm.Key = (new UnicodeEncoding()).GetBytes("VLadisla");
-            aesAlgm.IV = (new UnicodeEncoding()).GetBytes("ALsidalv");
+            aesAlgm.Key = DataCrypto.GetBytes("sd&*Kx{Q");
+            aesAlgm.IV = DataCrypto.GetBytes("SD78kX[q");
             aesAlgm.Mode = CipherMode.CBC;
             aesAlgm.Padding = PaddingMode.PKCS7;
         }

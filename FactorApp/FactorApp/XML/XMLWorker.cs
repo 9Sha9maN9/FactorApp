@@ -44,16 +44,6 @@ namespace FactorApp.XML
             doc.Save(xmlFile);
         }
 
-        public virtual void Add(object value)
-        {
-            document.Root.Add(value);
-        }
-
-        public virtual void Delete(object value)
-        {
-
-        }
-
     }
 
     class UsersBaseClass : XMLWorker
@@ -76,16 +66,15 @@ namespace FactorApp.XML
             RightsType defaultRight = RightsType.Administration;
             string defaultLogIn = "Administrator";
             string defaultPassword = "Adm";
-            document.Add(new XElement("UsersBase"));
+            document.Add(new XElement("UsersBase", new XAttribute("Id", 0)));
             Add(defaultLogIn, defaultPassword, defaultRight);
         }
 
         public bool IsValidLogIn(string logIn)
         {
-            user =
-                from el in document.Root.Elements("User")
-                where (string)cryptoWorker.AesDataDecrypt((new UnicodeEncoding()).GetBytes(el.Attribute("LogIN").Value)) == logIn
-                select el;
+            user = (from el in document.Root.Elements("User")
+                    where (string)cryptoWorker.AesDataDecrypt(DataCrypto.GetBytes(el.Attribute("LogIN").Value)) == logIn
+                    select el);
             if (user.ToList().Count == 1)
             {
                 return true;
@@ -118,36 +107,28 @@ namespace FactorApp.XML
         public void Add(string logIn, string password, RightsType rights)
         {
             List<XAttribute> attr = new List<XAttribute>();
+            attr.Add(new XAttribute("Id", GetLastId()));
             attr.Add(new XAttribute("LogIN", DataCrypto.GetString(cryptoWorker.AesDataEncrypt(logIn))));
             attr.Add(new XAttribute("Password", new UnicodeEncoding().GetString(cryptoWorker.HashPasswordEncrypt(password))));
             attr.Add(new XAttribute("Rights", DataCrypto.GetString(cryptoWorker.AesDataEncrypt(rights))));
             document.Root.Add(new XElement("User", attr));
+            SetLastId();
             document.Save(filePath);
         }
 
-        public void Delete(string logIn)
+        public void Delete(int id)
         {
-            document.Root.Elements().First(x => (string)cryptoWorker.AesDataDecrypt(DataCrypto.GetBytes(x.Attribute("LogIN").Value)) == logIn).Remove();
+            document.Root.Elements().First(x=> int.Parse(x.Attribute("Id").Value)==id).Remove();
             document.Save(filePath);
         }
 
-        public void Edit(string logIn, string password, List<RightsType> rights)
+        public void Edit(int id,string logIn, string password, RightsType rights)
         {
-
-        }
-
-        public User GetUserByLogin(string logIn)
-        {
-            if (IsValidLogIn(logIn))
-            {
-                foreach (XElement el in user)
-                {
-                    return new User((string)cryptoWorker.AesDataDecrypt(DataCrypto.GetBytes(el.Attribute("LogIN").Value)),
-                    (RightsType)Enum.Parse(typeof(RightsType),
-                    (string)cryptoWorker.AesDataDecrypt(DataCrypto.GetBytes(el.Attribute("Rights").Value))));
-                }
-            }
-            return new User();
+            XElement tmp = document.Root.Elements().First(x => int.Parse(x.Attribute("Id").Value) == id);
+            tmp.Attribute("LogIN").Value=DataCrypto.GetString(cryptoWorker.AesDataEncrypt(logIn));
+            tmp.Attribute("Password").Value = new UnicodeEncoding().GetString(cryptoWorker.HashPasswordEncrypt(password));
+            tmp.Attribute("Rights").Value = DataCrypto.GetString(cryptoWorker.AesDataEncrypt(rights));
+            document.Save(filePath);
         }
 
         public List<User> GetAllUsers()
@@ -158,11 +139,24 @@ namespace FactorApp.XML
                 select el;
             foreach (XElement el in user)
             {
-                result.Add(new User((string)cryptoWorker.AesDataDecrypt(DataCrypto.GetBytes(el.Attribute("LogIN").Value)),
+                result.Add(new User(int.Parse(el.Attribute("Id").Value),(string)cryptoWorker.AesDataDecrypt(DataCrypto.GetBytes(el.Attribute("LogIN").Value)),
+                    el.Attribute("Password").Value,
                     (RightsType)Enum.Parse(typeof(RightsType),
                     (string)cryptoWorker.AesDataDecrypt(DataCrypto.GetBytes(el.Attribute("Rights").Value)))));
             }
             return result;
+        }
+
+        public int GetLastId()
+        {
+            return int.Parse(document.Root.Attribute("Id").Value);
+        }
+
+        private void SetLastId()
+        {
+            int value = GetLastId();
+            value += 1;
+            document.Root.Attribute("Id").Value = value.ToString();
         }
 
     }

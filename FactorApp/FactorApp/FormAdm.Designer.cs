@@ -100,7 +100,7 @@
             this.usersGrid.EditMode = System.Windows.Forms.DataGridViewEditMode.EditProgrammatically;
             this.usersGrid.Location = new System.Drawing.Point(12, 218);
             this.usersGrid.Name = "usersGrid";
-            this.usersGrid.Size = new System.Drawing.Size(299, 203);
+            this.usersGrid.Size = new System.Drawing.Size(299, 171);
             this.usersGrid.TabIndex = 3;
             // 
             // admGroupBox
@@ -115,7 +115,7 @@
             this.admGroupBox.Controls.Add(this.label1);
             this.admGroupBox.Location = new System.Drawing.Point(12, 28);
             this.admGroupBox.Name = "admGroupBox";
-            this.admGroupBox.Size = new System.Drawing.Size(299, 184);
+            this.admGroupBox.Size = new System.Drawing.Size(299, 171);
             this.admGroupBox.TabIndex = 4;
             this.admGroupBox.TabStop = false;
             this.admGroupBox.Text = "Данные пользователя";
